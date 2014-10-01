@@ -32,11 +32,11 @@ for each in payloads:
         if (len(match)!= 0) or match != 'None':
             if 'tcp' in match:
                 print ('Host: ' + query + confirm)
-                print ('Payload: ' + heads + payloads[each])
+                print ('Payload: ' + str(heads) + str(payloads[each]))
                 print(match[314:704])
             elif 'root' in match:
                 print ('Host: ' + query + confirm)
-                print ('Payload: ' + heads + payloads[each])
+                print ('Payload: ' + str(heads) + str(payloads[each]))
                 print(match[3:35])
             else:
                 print(match)
