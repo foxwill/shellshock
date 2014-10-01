@@ -49,3 +49,4 @@ for each in payloads:
                 print(match)
         else:
             print ('Host' + allClear)
+            print(match)
