@@ -35,7 +35,7 @@ for each in payloads:
         #make the request and store results
         results = requests.get(query, headers={heads:payloads[each]})
         soup = BeautifulSoup(results.text)
-        match = str(soup.body.p)
+        match = str(soup.body)
         if match != 'None':
             if 'tcp' in match:
                 print ('Host: ' + query + confirm)
